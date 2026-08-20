@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "astockevent"
+# 🔴 0.3.0 是**存根版**：0.2.x 装的是一个 stdio MCP 服务端，它背后那个 REST 后端
+#    已经不存在了 —— 照着装的人会连到一个不存在的东西。
+#    服务已改为 **remote MCP**（指向 URL，不安装代码），所以这个包不再有实现，
+#    只负责把装到它的人**明确地**引导到新入口，而不是静默地坏掉。
+version = "0.3.0"
+description = "AStockEvent is now a remote MCP server — point your client at https://astockevent.com/mcp/ (this package is a pointer, not an implementation)"
+readme = "README.md"
+license = "MIT"
+authors = [
+    {name = "AStockEvent", email = "astockevent@outlook.com"},
+]
+keywords = ["mcp", "a-share", "financial-data", "announcement", "ai-agent"]
+classifiers = [
+    "Development Status :: 7 - Inactive",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Topic :: Office/Business :: Financial :: Investment",
+]
+requires-python = ">=3.9"
+# 🔴 **零依赖**：存根不该把 httpx/mcp 这些拖进别人的环境。
+dependencies = []
+
+[project.urls]
+Homepage = "https://astockevent.com"
+Documentation = "https://astockevent.com/docs"
+Repository = "https://github.com/NengjiangLunpi/astockevent-mcp"
+
+[project.scripts]
+# 🔴 保留和 0.2.x 同名的入口点 —— 装过旧版的人敲同一条命令时，
+#    拿到的是**一句说明**而不是一个 traceback。
+astockevent-mcp = "astockevent:_cli"
+
+[tool.setuptools.packages.find]
+where = ["src"]
